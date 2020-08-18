@@ -1,3 +1,10 @@
+# 개발 환경
+```
+Java 1.8
+Spring Boot 2.2.4
+NodeJs 14.2.0
+React 16.13.1
+```
 # 주요 스크립트
 gradle에서 Node 빌드를 하기 위한 플러그인 "com.moowork.node"을 추가해주었다.
 그리고 gradle 빌드 시 리액트 프로젝트 경로에서 "npm run bulid" 명령어가 실행되어 리액트 프로젝트가 빌드되도록 하고, 해당 빌드된 내용을 gradle 빌드에 포함시켰다.
