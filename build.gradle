@@ -12,12 +12,11 @@ buildscript {
     }
 }
 plugins {
-    id "com.moowork.node" version "${mooworkNodeVersion}"
     id "java"
     id "org.springframework.boot" version "${springBootVersion}"
     id "io.spring.dependency-management" version "${dependencyManagementVersion}"
+    id "com.moowork.node" version "${mooworkNodeVersion}"
 }
-
 group = 'com.gun'
 version = '0.0.1'
 sourceCompatibility = '1.8'
@@ -34,6 +33,8 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+//리액트 프로젝트 경로
+//$projectDir은 스프링 부트 root 경로
 def webappDir = "$projectDir/frontend/my-app"
 
 task appNpmInstall(type: NpmTask) {
