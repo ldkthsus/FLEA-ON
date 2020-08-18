@@ -1,0 +1,48 @@
+buildscript {
+    ext {
+        springBootVersion = '2.2.4.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+plugins {
+    id "com.moowork.node" version "1.3.1"
+}
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: "com.moowork.node"
+
+group = 'com.gun'
+version = '0.0.1'
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.3.3.RELEASE'
+}
+
+test {
+    useJUnitPlatform()
+}
+def webappDir = "$projectDir/frontend/my-app"
+
+task appNpmInstall(type: NpmTask) {
+    workingDir = file("${webappDir}")
+    args = ["run", "build"]
+}
+task copyWebApp(type: Copy) {
+    from 'frontend/my-app/build'
+    into "build/resources/main/static"
+}
+copyWebApp.dependsOn(appNpmInstall)
+compileJava.dependsOn(copyWebApp)
