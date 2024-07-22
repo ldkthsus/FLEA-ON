@@ -40,26 +40,30 @@ dependencies {
 
 // Node plugin configuration
 node {
-	version = '18.16.0' // or the version you need
+	version = '20.15.0' // or the version you need
 	npmVersion = '10.8.1' // or the version you need
 	download = true
 }
 
-task npmBuild(type: Exec) {
-	dependsOn 'npmInstall'
-	commandLine 'npm', 'run', 'build'
-	workingDir file('src/main/frontend')
+task installNpmDependencies(type: com.github.gradle.node.npm.task.NpmTask) {
+	workingDir = file("${projectDir}/src/main/frontend")
+	args = ['install']
 }
 
-task copyFrontendToResources(type: Copy) {
-	dependsOn npmBuild
-	from 'src/main/frontend/build' // Adjust according to your build output
-	into 'src/main/resources/static'
+task buildFrontend(type: com.github.gradle.node.npm.task.NpmTask, dependsOn: installNpmDependencies) {
+	workingDir = file("${projectDir}/src/main/frontend")
+	args = ['run', 'build']
 }
 
-// Ensure frontend is built before packaging the JAR
 bootJar {
-	dependsOn copyFrontendToResources
+	dependsOn buildFrontend
+	from("${projectDir}/src/main/frontend/build") {
+		into 'static'
+	}
+}
+
+tasks.withType(Test) {
+	useJUnitPlatform()
 }
 
 tasks.named('test') {
