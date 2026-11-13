@@ -272,7 +272,7 @@ spring.security.oauth2.client.registration.kakao.client-name=Kakao
     - 키워드로 검색이 가능합니다.
     - 카테고리별로 검색이 가능합니다.
 
-# 10. 회고
+<!--# 10. 회고
 
 - 박민지
     
@@ -284,4 +284,4 @@ spring.security.oauth2.client.registration.kakao.client-name=Kakao
 
 - 구고운
 
-- 김해인
+- 김해인 -->
